@@ -17,15 +17,8 @@ public class AmmoCountUI : MonoBehaviour
         gun = FindObjectOfType<Gun>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void AmmoCount(int maxCount, int currentCount)
     {
-        Debug.Log("Invoked AmmoCount");
         maxAmmo.text = maxCount.ToString();  
         currentAmmo.text = currentCount.ToString();
     }

@@ -57,6 +57,8 @@ public class Gun : MonoBehaviour
 
     public void AddAmmo(int amount)
     {
+        Debug.Log("Ammo before " + ammo);
         ammo += amount;
+        Debug.Log("Ammo now is " + ammo);
     }
 }

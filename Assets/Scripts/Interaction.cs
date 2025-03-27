@@ -2,53 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
+using TMPro;
 
 public class Interaction : MonoBehaviour
 {
-    FPSController controller;
+    [SerializeField] TMP_Text maxAmmo;
+    [SerializeField] TMP_Text currentAmmo;
 
-    private bool isInteractable = false;
-
-    UnityAction<bool> OnInteract;
+    FPSController FPScontroller;
+    Gun gun;
 
     // Start is called before the first frame update
     void Start()
     {
-        controller = FindObjectOfType<FPSController>();
-
-        if(controller != null )
-        { 
-            controller.OnInteractable += isCollision;
-        }
-
-        OnInteract += Refill;
+        FPScontroller = FindObjectOfType<FPSController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-    void Interact()
-    {
-        Input.GetButton("Interact");
-        OnInteract?.Invoke(isInteractable);
-    }
-
-    private void isCollision(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.layer == LayerMask.NameToLayer("Interactable"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
-            isInteractable = true;  
-        }
-        else
-        {
-            controller.OnInteractable -= isCollision;
+            Debug.Log("inRange");
+            if (FPScontroller != null)
+            {
+                Debug.Log("Added Listener");
+                FPScontroller.OnInteract += Refill;
+            }
         }
     }
 
-    private void Refill(bool interactable)
+    private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Interactable"))
+        {
+            Debug.Log("outOfRange");
+            if (FPScontroller != null)
+            {
+                Debug.Log("Removed Listener");
+                FPScontroller.OnInteract -= Refill;
+            }
+        }
+    }
 
+    public void Refill()
+    {
+        Debug.Log("Refilling");
+
+        int max = int.Parse(maxAmmo.text);
+        Debug.Log(max);
+        int current = int.Parse(currentAmmo.text);
+        Debug.Log(current);
+        int amountToRefill = max - current;
+
+        currentAmmo.text = maxAmmo.text;
+
+        FPScontroller.IncreaseAmmo(amountToRefill);
     }
 }

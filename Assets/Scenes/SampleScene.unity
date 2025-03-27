@@ -5426,6 +5426,7 @@ GameObject:
   - component: {fileID: 2071811431}
   - component: {fileID: 2071811436}
   - component: {fileID: 2071811437}
+  - component: {fileID: 2071811438}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -5572,3 +5573,17 @@ MonoBehaviour:
   barrelEnd: {fileID: 11768569}
   colorValidTarget: {r: 0.8980393, g: 0.20000002, b: 0.20000002, a: 1}
   colorNoValidTarget: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+--- !u!114 &2071811438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071811430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e1016014e9bd942b90c26b6b45d967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: {fileID: 135464750}
+  currentAmmo: {fileID: 213305280}

@@ -29,7 +29,7 @@ public class FPSController : MonoBehaviour
     // properties
     public GameObject Cam { get { return cam; } }
 
-    public UnityAction<ControllerColliderHit> OnInteractable;
+    public UnityAction OnInteract;
     
 
     private void Awake()
@@ -50,6 +50,8 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InteractionAttempt();
+
         Movement();
         Look();
 
@@ -82,6 +84,15 @@ public class FPSController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void InteractionAttempt()
+    {
+        if (Input.GetButtonDown("Interact"))
+        {
+            OnInteract?.Invoke();
+            Debug.Log("Invoked OnInteract");
+        }
     }
 
     void Look()
@@ -133,6 +144,7 @@ public class FPSController : MonoBehaviour
 
     public void IncreaseAmmo(int amount)
     {
+        Debug.Log("Amount is " + amount);
         currentGun.AddAmmo(amount);
     }
 
@@ -168,8 +180,6 @@ public class FPSController : MonoBehaviour
     // Character Controller can't use OnCollisionEnter :D thanks Unity
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        OnInteractable?.Invoke(hit);
-
         if (hit.gameObject.GetComponent<Damager>())
         {
             var collisionPoint = hit.collider.ClosestPoint(transform.position);
