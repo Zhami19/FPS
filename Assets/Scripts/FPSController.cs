@@ -17,7 +17,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] float lookSensitivityY = 1.0f;
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpForce = 10;
-    
+
     // private variables
     Vector3 velocity;
     bool grounded;
@@ -30,6 +30,7 @@ public class FPSController : MonoBehaviour
     public GameObject Cam { get { return cam; } }
 
     public UnityAction OnInteract;
+    public UnityEvent OnDamage;
     
 
     private void Awake()
@@ -86,15 +87,6 @@ public class FPSController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    private void InteractionAttempt()
-    {
-        if (Input.GetButtonDown("Interact"))
-        {
-            OnInteract?.Invoke();
-            Debug.Log("Invoked OnInteract");
-        }
-    }
-
     void Look()
     {
         Vector2 looking = GetPlayerLook();
@@ -107,6 +99,15 @@ public class FPSController : MonoBehaviour
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         transform.Rotate(Vector3.up * lookX);
+    }
+
+    void InteractionAttempt()
+    {
+        if (Input.GetButtonDown("Interact"))
+        {
+            OnInteract?.Invoke();
+            Debug.Log("Invoked OnInteract");
+        }
     }
 
     void FireGun()
@@ -185,6 +186,7 @@ public class FPSController : MonoBehaviour
             var collisionPoint = hit.collider.ClosestPoint(transform.position);
             var knockbackAngle = (transform.position - collisionPoint).normalized;
             velocity = (20 * knockbackAngle);
+            OnDamage?.Invoke();
         }
     }
 

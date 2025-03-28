@@ -15,10 +15,12 @@ public class Gun : MonoBehaviour
     [SerializeField] float timeBetweenShots = 0.1f;
 
     [SerializeField] UnityEvent<int, int> OnChangeAmmo;
+    public UnityEvent OnFire;
 
     // private variables
     int ammo;
     float elapsed = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,8 @@ public class Gun : MonoBehaviour
         timeBetweenShots = 0;
         ammo -= 1;
         OnChangeAmmo?.Invoke(maxAmmo, ammo);
+        OnFire?.Invoke();
+
 
         return true;
     }

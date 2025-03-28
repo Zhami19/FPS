@@ -15,6 +15,12 @@ public class PlayerHUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        healthBar.fillAmount = 1;
         player = FindObjectOfType<FPSController>();
+    }
+
+    public void DamageTaken()
+    {
+        healthBar.fillAmount -= .2f;
     }
 }
