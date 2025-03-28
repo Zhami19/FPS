@@ -20,7 +20,7 @@ public class ShakeAndParticles : MonoBehaviour
     [ContextMenu("Start Shake")]
     public void StartShake()
     {
-        vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 3f;
+        vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 5f;
         StartCoroutine(ShakeTime());
     }
 
